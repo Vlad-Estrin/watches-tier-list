@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watches Tier List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0e;
+    --surface: #161619;
+    --text: #eceae6;
+    --muted: #8f8c87;
+    --border: rgba(255,255,255,0.05);
+    --s-color: #c8a55a;
+    --a-color: #5e9e9b;
+    --b-color: #b0885a;
+    --c-color: #7da882;
+    --d-color: #6e94bf;
+    --e-color: #a88294;
+    --f-color: #6e6e72;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  .wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+
+  header::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--s-color), transparent);
+    margin: 18px auto 0;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #f2ead8 0%, #d4b46a 40%, #f2ead8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tier {
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .tier:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+
+  .tier-label {
+    width: 64px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+
+  .tier-label.s { background: linear-gradient(180deg, #d4a94f, #a6823e); }
+  .tier-label.a { background: linear-gradient(180deg, #5e9e9b, #467371); }
+  .tier-label.b { background: linear-gradient(180deg, #b0885a, #8a6a42); }
+  .tier-label.c { background: linear-gradient(180deg, #7da882, #5e7d62); }
+  .tier-label.d { background: linear-gradient(180deg, #6e94bf, #4f6d8f); }
+  .tier-label.e { background: linear-gradient(180deg, #a88294, #7d5f6d); }
+  .tier-label.f { background: linear-gradient(180deg, #6e6e72, #525256); }
+
+  .tier-label::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent 60%);
+    pointer-events: none;
+  }
+
+  .tier-count {
+    font-size: 0.6rem;
+    opacity: 0.7;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 400;
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+  }
+
+  .tier-brands {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 14px 16px;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .brand {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.28s ease;
+    cursor: default;
+    min-width: 120px;
+  }
+
+  .brand:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+
+  .brand-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+  }
+
+  .brand-models {
+    font-size: 0.74rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.3;
+    font-style: italic;
+  }
+
+  .brand.s-hover:hover { border-color: rgba(200,165,90,0.3); }
+  .brand.s-hover:hover .brand-name { color: var(--s-color); }
+  .brand.a-hover:hover { border-color: rgba(94,158,155,0.3); }
+  .brand.a-hover:hover .brand-name { color: var(--a-color); }
+  .brand.b-hover:hover { border-color: rgba(176,136,90,0.3); }
+  .brand.b-hover:hover .brand-name { color: var(--b-color); }
+  .brand.c-hover:hover { border-color: rgba(125,168,130,0.3); }
+  .brand.c-hover:hover .brand-name { color: var(--c-color); }
+  .brand.d-hover:hover { border-color: rgba(110,148,191,0.3); }
+  .brand.d-hover:hover .brand-name { color: var(--d-color); }
+  .brand.e-hover:hover { border-color: rgba(168,130,148,0.3); }
+  .brand.e-hover:hover .brand-name { color: var(--e-color); }
+  .brand.f-hover:hover { border-color: rgba(110,110,114,0.3); }
+  .brand.f-hover:hover .brand-name { color: var(--f-color); }
+
+  footer {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 0.76rem;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  @media (max-width: 680px) {
+    h1 { font-size: 2.1rem; }
+    .tier { flex-direction: column; }
+    .tier-label { width: 100%; min-height: 44px; font-size: 1.7rem; }
+    .tier-count { bottom: 4px; right: 12px; }
+    .tier-brands { padding: 12px; }
+    .brand { min-width: unset; flex: 1 1 140px; }
+  }
+
+  .stagger-in {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: fadeUp 0.55s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Watches Tier List</h1>
+    </header>
+
+    <div class="tier stagger-in" style="animation-delay:0.05s">
+      <div class="tier-label s">S<span class="tier-count">10</span></div>
+      <div class="tier-brands">
+        <div class="brand s-hover"><span class="brand-name">Patek Philippe</span><span class="brand-models">Nautilus, Calatrava, Aquanaut</span></div>
+        <div class="brand s-hover"><span class="brand-name">A. Lange & Söhne</span><span class="brand-models">Lange 1, Saxonia, Zeitwerk</span></div>
+        <div class="brand s-hover"><span class="brand-name">Audemars Piguet</span><span class="brand-models">Royal Oak, Royal Oak Offshore</span></div>
+        <div class="brand s-hover"><span class="brand-name">Vacheron Constantin</span><span class="brand-models">Overseas, Patrimony, Traditionnelle</span></div>
+        <div class="brand s-hover"><span class="brand-name">Breguet</span><span class="brand-models">Classique, Type XXI, Tourbillon</span></div>
+        <div class="brand s-hover"><span class="brand-name">Grand Seiko</span><span class="brand-models">Snowflake SBGA211, Spring Drive</span></div>
+        <div class="brand s-hover"><span class="brand-name">Jaeger-LeCoultre</span><span class="brand-models">Reverso, Master Ultra Thin, Polaris</span></div>
+        <div class="brand s-hover"><span class="brand-name">Rolex</span><span class="brand-models">Submariner, Daytona, Datejust</span></div>
+        <div class="brand s-hover"><span class="brand-name">F.P. Journe</span><span class="brand-models">Chronomètre Bleu, Tourbillon Souverain</span></div>
+        <div class="brand s-hover"><span class="brand-name">Omega</span><span class="brand-models">Speedmaster Moonwatch, Seamaster</span></div>
+      </div>
+    </div>
+
+    <div class="tier stagger-in" style="animation-delay:0.11s">
+      <div class="tier-label a">A<span class="tier-count">10</span></div>
+      <div class="tier-brands">
+        <div class="brand a-hover"><span class="brand-name">Tudor</span><span class="brand-models">Black Bay, Pelagos, Ranger</span></div>
+        <div class="brand a-hover"><span class="brand-name">Zenith</span><span class="brand-models">El Primero, Chronomaster, Defy</span></div>
+        <div class="brand a-hover"><span class="brand-name">Blancpain</span><span class="brand-models">Fifty Fathoms, Villeret</span></div>
+        <div class="brand a-hover"><span class="brand-name">Glashütte Original</span><span class="brand-models">PanoMatic, Senator, Seventies</span></div>
+        <div class="brand a-hover"><span class="brand-name">Nomos Glashütte</span><span class="brand-models">Tangente, Orion, Metro</span></div>
+        <div class="brand a-hover"><span class="brand-name">Cartier</span><span class="brand-models">Tank, Santos, Ballon Bleu</span></div>
+        <div class="brand a-hover"><span class="brand-name">IWC</span><span class="brand-models">Portugieser, Big Pilot, Mark XX</span></div>
+        <div class="brand a-hover"><span class="brand-name">Chopard</span><span class="brand-models">L.U.C., Alpine Eagle, Mille Miglia</span></div>
+        <div class="brand a-hover"><span class="brand-name">Bulgari</span><span class="brand-models">Octo Finissimo, Serpenti</span></div>
+        <div class="brand a-hover"><span class="brand-name">Longines</span><span class="brand-models">Spirit, Legend Diver, Master</span></div>
+      </div>
+    </div>
+
+    <div class="tier stagger-in" style="animation-delay:0.17s">
+      <div class="tier-label b">B<span class="tier-count">10</span></div>
+      <div class="tier-brands">
+        <div class="brand b-hover"><span class="brand-name">Oris</span><span class="brand-models">Aquis, Divers Sixty-Five, Big Crown</span></div>
+        <div class="brand b-hover"><span class="brand-name">TAG Heuer</span><span class="brand-models">Carrera, Monaco, Aquaracer</span></div>
+        <div class="brand b-hover"><span class="brand-name">Sinn</span><span class="brand-models">U1, U2, 104, EZM</span></div>
+        <div class="brand b-hover"><span class="brand-name">Baume & Mercier</span><span class="brand-models">Clifton Baumatic, Riviera, Classima</span></div>
+        <div class="brand b-hover"><span class="brand-name">Rado</span><span class="brand-models">Captain Cook, True Square, HyperChrome</span></div>
+        <div class="brand b-hover"><span class="brand-name">Junghans</span><span class="brand-models">Max Bill, Meister, Form A</span></div>
+        <div class="brand b-hover"><span class="brand-name">Christopher Ward</span><span class="brand-models">C60 Trident, C65, C1 Grand Malvern</span></div>
+        <div class="brand b-hover"><span class="brand-name">Baltic</span><span class="brand-models">Aquascaphe, HMS, MR01</span></div>
+        <div class="brand b-hover"><span class="brand-name">Farer</span><span class="brand-models">Lander, Beagle, AquaMatic</span></div>
+        <div class="brand b-hover"><span class="brand-name">Hamilton</span><span class="brand-models">Khaki Field, Ventura, Jazzmaster</span></div>
+      </div>
+    </div>
+
+    <div class="tier stagger-in" style="animation-delay:0.23s">
+      <div class="tier-label c">C<span class="tier-count">11</span></div>
+      <div class="tier-brands">
+        <div class="brand c-hover"><span class="brand-name">Seiko</span><span class="brand-models">Prospex, Presage, Alpinist, SKX</span></div>
+        <div class="brand c-hover"><span class="brand-name">Tissot</span><span class="brand-models">PRX, Powermatic 80, Le Locle</span></div>
+        <div class="brand c-hover"><span class="brand-name">Mido</span><span class="brand-models">Ocean Star, Commander, Baroncelli</span></div>
+        <div class="brand c-hover"><span class="brand-name">Certina</span><span class="brand-models">DS Action, DS PH200M</span></div>
+        <div class="brand c-hover"><span class="brand-name">Citizen</span><span class="brand-models">Promaster, The Citizen, Eco-Drive</span></div>
+        <div class="brand c-hover"><span class="brand-name">Nivada Grenchen</span><span class="brand-models">F77, Chronomaster Aviator</span></div>
+        <div class="brand c-hover"><span class="brand-name">Fortis</span><span class="brand-models">Flieger, Marinemaster, Cosmonaut</span></div>
+        <div class="brand c-hover"><span class="brand-name">Alpina</span><span class="brand-models">Alpiner, Seastrong, Startimer</span></div>
+        <div class="brand c-hover"><span class="brand-name">Lorier</span><span class="brand-models">Neptune, Gemini, Falcon</span></div>
+        <div class="brand c-hover"><span class="brand-name">Yema</span><span class="brand-models">Superman, Speedgraf, Flygraf</span></div>
+        <div class="brand c-hover"><span class="brand-name">Frederique Constant</span><span class="brand-models">Slimline, Highlife, Classics</span></div>
+      </div>
+    </div>
+
+    <div class="tier stagger-in" style="animation-delay:0.29s">
+      <div class="tier-label d">D<span class="tier-count">10</span></div>
+      <div class="tier-brands">
+        <div class="brand d-hover"><span class="brand-name">Casio</span><span class="brand-models">G-Shock, Oceanus, Edifice</span></div>
+        <div class="brand d-hover"><span class="brand-name">Timex</span><span class="brand-models">Q Reissue, Marlin, Expedition</span></div>
+        <div class="brand d-hover"><span class="brand-name">Orient</span><span class="brand-models">Bambino, Kamasu, Ray II, Mako</span></div>
+        <div class="brand d-hover"><span class="brand-name">Swatch</span><span class="brand-models">MoonSwatch, Bioceramic, Sistem51</span></div>
+        <div class="brand d-hover"><span class="brand-name">Laco</span><span class="brand-models">Flieger Type A, Type B, Augsburg</span></div>
+        <div class="brand d-hover"><span class="brand-name">Steinhart</span><span class="brand-models">Ocean One, Vintage, Flieger</span></div>
+        <div class="brand d-hover"><span class="brand-name">Stowa</span><span class="brand-models">Flieger, Antea, Partitio</span></div>
+        <div class="brand d-hover"><span class="brand-name">Vaer</span><span class="brand-models">D5, C5, S5</span></div>
+        <div class="brand d-hover"><span class="brand-name">Dan Henry</span><span class="brand-models">1964, 1970, 1963</span></div>
+        <div class="brand d-hover"><span class="brand-name">Undone</span><span class="brand-models">Basecamp, Urban, Aqua</span></div>
+      </div>
+    </div>
+
+    <div class="tier stagger-in" style="animation-delay:0.35s">
+      <div class="tier-label e">E<span class="tier-count">7</span></div>
+      <div class="tier-brands">
+        <div class="brand e-hover"><span class="brand-name">Shinola</span><span class="brand-models">Runwell, Lake Erie Monster, Canfield</span></div>
+        <div class="brand e-hover"><span class="brand-name">Fossil</span><span class="brand-models">Minimalist, Grant, Machine</span></div>
+        <div class="brand e-hover"><span class="brand-name">Michael Kors</span><span class="brand-models">Runway, Lexington, Parker</span></div>
+        <div class="brand e-hover"><span class="brand-name">Emporio Armani</span><span class="brand-models">Classic, Luigi, Sport</span></div>
+        <div class="brand e-hover"><span class="brand-name">Skagen</span><span class="brand-models">Aaren, Holst, Grenen</span></div>
+        <div class="brand e-hover"><span class="brand-name">Invicta</span><span class="brand-models">Pro Diver, Russian Diver, Specialty</span></div>
+        <div class="brand e-hover"><span class="brand-name">Nixon</span><span class="brand-models">Time Teller, Sentry, 51-30</span></div>
+      </div>
+    </div>
+
+    <div class="tier stagger-in" style="animation-delay:0.41s">
+      <div class="tier-label f">F<span class="tier-count">6</span></div>
+      <div class="tier-brands">
+        <div class="brand f-hover"><span class="brand-name">Daniel Wellington</span><span class="brand-models">Classic Sheffield, Petite</span></div>
+        <div class="brand f-hover"><span class="brand-name">MVMT</span><span class="brand-models">Classic, Voyager, Element</span></div>
+        <div class="brand f-hover"><span class="brand-name">Vincero</span><span class="brand-models">Chrono S, Kairos, Outrider</span></div>
+        <div class="brand f-hover"><span class="brand-name">The Fifth</span><span class="brand-models">Melbourne, Tokyo, New York</span></div>
+        <div class="brand f-hover"><span class="brand-name">Filippo Loreti</span><span class="brand-models">Venice, Rome, Odyssey</span></div>
+        <div class="brand f-hover"><span class="brand-name">Brathwait</span><span class="brand-models">The Classic Slim, Automatic</span></div>
+      </div>
+    </div>
+
+    <footer>Оценка по консенсусу часового сообщества</footer>
+  </div>
+</body>
+</html>
