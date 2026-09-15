@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watches Tier List | Consensus-Driven Rankings</title>
+    <title>Watch Tier List</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --surface-hover: #1c1c1c;
-            --text: #e8e4dc;
-            --text-muted: #9a9590;
-            --border: #2a2825;
-            --accent-gold: #c5a059;
-            
-            --tier-s: #c5a059;
-            --tier-a: #5a8a6e;
-            --tier-b: #4a7fb5;
-            --tier-c: #b8954a;
-            --tier-d: #b87a4a;
-            --tier-e: #8a5a5a;
-            --tier-f: #8a3a3a;
+            --bg: #0b0d10;
+            --panel: #12161b;
+            --panel-2: #171c22;
+            --panel-hover: #1b2128;
+            --text: #eef2f6;
+            --muted: #97a1ad;
+            --line: #252d36;
+            --line-2: #303947;
+            --accent: #c3c9d1;
+            --s: #e6ecef;
+            --a: #c9d6df;
+            --b: #9bb1c3;
+            --c: #7f92a4;
+            --d: #677788;
+            --e: #545f6d;
+            --f: #424a55;
+            --radius: 18px;
+            --shadow: 0 16px 40px rgba(0,0,0,0.24);
         }
 
         * {
@@ -32,880 +35,485 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Libre Franklin', sans-serif;
-            background-color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top, rgba(255,255,255,0.04), transparent 28%),
+                linear-gradient(180deg, #0b0d10 0%, #0d1116 100%);
             color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+            line-height: 1.55;
+            min-height: 100vh;
         }
 
-        /* Grain overlay */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            z-index: 100;
-        }
-
-        /* Header */
-        .hero {
-            text-align: center;
-            padding: 5rem 2rem 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 4rem;
-            background: linear-gradient(to bottom, transparent, var(--accent-gold));
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .hero h1 span {
-            color: var(--accent-gold);
-            font-style: italic;
-        }
-
-        .hero .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-
-        .hero .tagline {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--text-muted);
-            margin-top: 1.5rem;
-        }
-
-        /* Intro */
-        .intro {
-            max-width: 800px;
+        .container {
+            width: min(1280px, calc(100% - 32px));
             margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
         }
 
-        .intro p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
+        .hero {
+            padding: 56px 0 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .criteria {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .criteria span {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-        }
-
-        .criteria span:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
-
-        /* Divider */
-        .divider {
-            width: 40px;
-            height: 1px;
-            background: var(--border);
-            margin: 3rem auto;
-        }
-
-        /* Tier Sections */
-        .tier-section {
-            max-width: 1200px;
-            margin: 0 auto 3rem;
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .tier-section:nth-child(2) { animation-delay: 0.1s; }
-        .tier-section:nth-child(3) { animation-delay: 0.2s; }
-        .tier-section:nth-child(4) { animation-delay: 0.3s; }
-        .tier-section:nth-child(5) { animation-delay: 0.4s; }
-        .tier-section:nth-child(6) { animation-delay: 0.5s; }
-        .tier-section:nth-child(7) { animation-delay: 0.6s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .tier-label {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 700;
-            width: 70px;
-            height: 70px;
+        .hero-top {
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border: 2px solid;
-            position: relative;
-            top: 0;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
-        .tier-label::after {
-            content: '';
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            right: 4px;
-            bottom: 4px;
-            border: 1px solid;
-            opacity: 0.3;
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
 
-        .tier-s .tier-label { color: var(--tier-s); border-color: var(--tier-s); }
-        .tier-a .tier-label { color: var(--tier-a); border-color: var(--tier-a); }
-        .tier-b .tier-label { color: var(--tier-b); border-color: var(--tier-b); }
-        .tier-c .tier-label { color: var(--tier-c); border-color: var(--tier-c); }
-        .tier-d .tier-label { color: var(--tier-d); border-color: var(--tier-d); }
-        .tier-e .tier-label { color: var(--tier-e); border-color: var(--tier-e); }
-        .tier-f .tier-label { color: var(--tier-f); border-color: var(--tier-f); }
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #9fb1c2;
+            box-shadow: 0 0 0 4px rgba(159, 177, 194, 0.14);
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+        }
+
+        .hero-copy {
+            max-width: 820px;
+        }
+
+        .hero-copy p {
+            color: var(--muted);
+            font-size: 15px;
+            max-width: 760px;
+        }
+
+        .meta {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 14px 16px;
+        }
+
+        .meta-card .label {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .meta-card .value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        main {
+            padding: 28px 0 64px;
+        }
+
+        .tier-section {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 18px;
+            align-items: start;
+            margin-bottom: 18px;
+        }
+
+        .tier-side {
+            position: sticky;
+            top: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .tier-mark {
+            width: 56px;
+            height: 56px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.02);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+        }
+
+        .tier-name {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .tier-note {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .tier-panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.015) 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 22px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+        }
 
         .tier-content {
-            flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px;
         }
 
         .brand-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 1.25rem;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
-
-        .brand-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .tier-s .brand-card::before { background: var(--tier-s); }
-        .tier-a .brand-card::before { background: var(--tier-a); }
-        .tier-b .brand-card::before { background: var(--tier-b); }
-        .tier-c .brand-card::before { background: var(--tier-c); }
-        .tier-d .brand-card::before { background: var(--tier-d); }
-        .tier-e .brand-card::before { background: var(--tier-e); }
-        .tier-f .brand-card::before { background: var(--tier-f); }
 
         .brand-card:hover {
-            background: var(--surface-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        }
-
-        .brand-card:hover::before {
-            opacity: 1;
+            transform: translateY(-2px);
+            background: var(--panel-hover);
+            border-color: var(--line-2);
         }
 
         .brand-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text);
+            font-size: 16px;
+            line-height: 1.25;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
         }
 
         .brand-card ul {
             list-style: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 8px;
         }
 
         .brand-card li {
-            font-size: 0.78rem;
-            color: var(--text-muted);
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.07);
             background: rgba(255,255,255,0.03);
-            padding: 0.25rem 0.6rem;
-            border-radius: 2px;
+            color: #bcc6d1;
+            font-size: 12px;
+            line-height: 1.2;
+            white-space: nowrap;
         }
 
-        /* Footer */
+        .tier-s .tier-mark { color: #0b0d10; background: var(--s); }
+        .tier-a .tier-mark { color: #0b0d10; background: var(--a); }
+        .tier-b .tier-mark { color: #0b0d10; background: var(--b); }
+        .tier-c .tier-mark { color: #eef2f6; background: var(--c); }
+        .tier-d .tier-mark { color: #eef2f6; background: var(--d); }
+        .tier-e .tier-mark { color: #eef2f6; background: var(--e); }
+        .tier-f .tier-mark { color: #eef2f6; background: var(--f); }
+
+        .tier-s .tier-panel { border-color: rgba(230,236,239,0.16); }
+        .tier-a .tier-panel { border-color: rgba(201,214,223,0.12); }
+        .tier-b .tier-panel { border-color: rgba(155,177,195,0.12); }
+        .tier-c .tier-panel { border-color: rgba(127,146,164,0.12); }
+        .tier-d .tier-panel { border-color: rgba(103,119,136,0.12); }
+        .tier-e .tier-panel { border-color: rgba(84,95,109,0.14); }
+        .tier-f .tier-panel { border-color: rgba(66,74,85,0.16); }
+
         .footer {
-            text-align: center;
-            padding: 4rem 2rem 3rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 24px 0 42px;
         }
 
         .footer p {
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
+            color: var(--muted);
+            font-size: 13px;
+            max-width: 820px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .tier-section {
-                flex-direction: column;
-                gap: 1rem;
+        @media (max-width: 980px) {
+            .meta {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            .tier-label {
-                width: 60px;
-                height: 60px;
-                font-size: 2.5rem;
+            .tier-section {
+                grid-template-columns: 1fr;
+            }
+
+            .tier-side {
+                position: static;
+                display: grid;
+                grid-template-columns: 56px 1fr;
+                gap: 14px;
+                align-items: center;
+            }
+
+            .tier-mark {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                width: min(100% - 20px, 1280px);
+            }
+
+            .hero {
+                padding-top: 32px;
+            }
+
+            .hero-top {
+                margin-bottom: 18px;
+            }
+
+            .meta {
+                grid-template-columns: 1fr;
+            }
+
+            .tier-panel {
+                padding: 14px;
+                border-radius: 18px;
             }
 
             .tier-content {
                 grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding: 3rem 1.5rem 2rem;
             }
         }
     </style>
 </head>
 <body>
     <header class="hero">
-        <h1>Watches <span>Tier List</span></h1>
-        <p class="subtitle">Consensus-driven watch rankings</p>
-        <p class="tagline">By the community, for the community</p>
+        <div class="container">
+            <div class="hero-top">
+                <div class="eyebrow">Watch ranking</div>
+            </div>
+            <div class="hero-copy">
+                <h1>Watch Tier List</h1>
+                <p>Simple ranking with two priorities: technology first, prestige second. No hype copy, no loud branding, no resale bias.</p>
+            </div>
+            <div class="meta">
+                <div class="meta-card">
+                    <span class="label">Primary factor</span>
+                    <span class="value">Technology</span>
+                </div>
+                <div class="meta-card">
+                    <span class="label">Secondary factor</span>
+                    <span class="value">Prestige &amp; status</span>
+                </div>
+                <div class="meta-card">
+                    <span class="label">Not counted</span>
+                    <span class="value">Resale value</span>
+                </div>
+                <div class="meta-card">
+                    <span class="label">Not counted</span>
+                    <span class="value">Marketing hype</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <section class="intro">
-        <p>
-            This tier list reflects the collective assessment of the watch enthusiast community. 
-            Rankings are based on finishing quality, horological heritage, in-house movement capability, 
-            and long-term value retention. Fashion watches and brands relying primarily on marketing 
-            rather than horological substance are graded accordingly.
-        </p>
-        <div class="criteria">
-            <span>Finishing Quality</span>
-            <span>Horological Heritage</span>
-            <span>In-House Movement</span>
-            <span>Value Retention</span>
-            <span>Independent Watchmaking</span>
-        </div>
-        <div class="divider"></div>
-    </section>
-
     <main>
-        <!-- S TIER -->
-        <section class="tier-section tier-s">
-            <div class="tier-label">S</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Patek Philippe</h3>
-                    <ul>
-                        <li>Nautilus</li>
-                        <li>Calatrava</li>
-                        <li>Aquanaut</li>
-                    </ul>
+        <div class="container">
+            <section class="tier-section tier-s">
+                <div class="tier-side">
+                    <div class="tier-mark">S</div>
+                    <div>
+                        <div class="tier-name">Top tier</div>
+                        <div class="tier-note">Elite technical depth with top-level prestige.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>A. Lange &amp; Söhne</h3>
-                    <ul>
-                        <li>Lange 1</li>
-                        <li>Saxonia</li>
-                        <li>Zeitwerk</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Patek Philippe</h3><ul><li>Advanced Research</li><li>Grand Complications</li><li>Silinvar</li></ul></div>
+                        <div class="brand-card"><h3>A. Lange &amp; Söhne</h3><ul><li>Zeitwerk</li><li>Datograph</li><li>Triple Split</li></ul></div>
+                        <div class="brand-card"><h3>Audemars Piguet</h3><ul><li>RD#4</li><li>Supersonnerie</li><li>High Complications</li></ul></div>
+                        <div class="brand-card"><h3>Vacheron Constantin</h3><ul><li>Twin Beat</li><li>Grand Complications</li><li>In-house Calibres</li></ul></div>
+                        <div class="brand-card"><h3>F.P. Journe</h3><ul><li>Résonance</li><li>Remontoir</li><li>Original Architecture</li></ul></div>
+                        <div class="brand-card"><h3>Omega</h3><ul><li>Co-Axial</li><li>Master Chronometer</li><li>15,000 Gauss</li></ul></div>
+                        <div class="brand-card"><h3>Jaeger-LeCoultre</h3><ul><li>Gyrotourbillon</li><li>Hybris Mechanica</li><li>Calibre Depth</li></ul></div>
+                        <div class="brand-card"><h3>Rolex</h3><ul><li>Chronergy</li><li>Parachrom / Syloxi</li><li>Industrial Precision</li></ul></div>
+                        <div class="brand-card"><h3>Breguet</h3><ul><li>Silicon Escapement</li><li>Magnetic Pivot</li><li>Tourbillon Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Grand Seiko</h3><ul><li>Spring Drive</li><li>Hi-Beat</li><li>9F Quartz</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Audemars Piguet</h3>
-                    <ul>
-                        <li>Royal Oak</li>
-                        <li>Royal Oak Offshore</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Vacheron Constantin</h3>
-                    <ul>
-                        <li>Overseas</li>
-                        <li>Patrimony</li>
-                        <li>Traditionnelle</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Breguet</h3>
-                    <ul>
-                        <li>Classique</li>
-                        <li>Type XXI</li>
-                        <li>Tourbillon</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Grand Seiko</h3>
-                    <ul>
-                        <li>Snowflake SBGA211</li>
-                        <li>Spring Drive</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Jaeger-LeCoultre</h3>
-                    <ul>
-                        <li>Reverso</li>
-                        <li>Master Ultra Thin</li>
-                        <li>Polaris</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Rolex</h3>
-                    <ul>
-                        <li>Submariner</li>
-                        <li>Daytona</li>
-                        <li>Datejust</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>F.P. Journe</h3>
-                    <ul>
-                        <li>Chronomètre Bleu</li>
-                        <li>Tourbillon Souverain</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Omega</h3>
-                    <ul>
-                        <li>Speedmaster Moonwatch</li>
-                        <li>Seamaster</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- A TIER -->
-        <section class="tier-section tier-a">
-            <div class="tier-label">A</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Tudor</h3>
-                    <ul>
-                        <li>Black Bay</li>
-                        <li>Pelagos</li>
-                        <li>Ranger</li>
-                    </ul>
+            <section class="tier-section tier-a">
+                <div class="tier-side">
+                    <div class="tier-mark">A</div>
+                    <div>
+                        <div class="tier-name">Strong</div>
+                        <div class="tier-note">Advanced technology or very high prestige.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Zenith</h3>
-                    <ul>
-                        <li>El Primero</li>
-                        <li>Chronomaster</li>
-                        <li>Defy</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Bulgari</h3><ul><li>Octo Finissimo</li><li>Ultra-thin Records</li><li>Integrated Engineering</li></ul></div>
+                        <div class="brand-card"><h3>Zenith</h3><ul><li>El Primero</li><li>1/10th Chronograph</li><li>High Frequency</li></ul></div>
+                        <div class="brand-card"><h3>Blancpain</h3><ul><li>High Complications</li><li>Fifty Fathoms</li><li>In-house Calibres</li></ul></div>
+                        <div class="brand-card"><h3>Glashütte Original</h3><ul><li>PanoMatic</li><li>Flyback</li><li>Manufacture Depth</li></ul></div>
+                        <div class="brand-card"><h3>Chopard</h3><ul><li>L.U.C.</li><li>Quattro</li><li>Chronometer Calibres</li></ul></div>
+                        <div class="brand-card"><h3>TAG Heuer</h3><ul><li>TH20</li><li>High-frequency R&amp;D</li><li>Chronograph Heritage</li></ul></div>
+                        <div class="brand-card"><h3>IWC</h3><ul><li>Pellaton System</li><li>Ceratanium</li><li>Perpetual Calendar</li></ul></div>
+                        <div class="brand-card"><h3>Breitling</h3><ul><li>B01</li><li>SuperQuartz</li><li>COSC Focus</li></ul></div>
+                        <div class="brand-card"><h3>Citizen</h3><ul><li>Calibre 0100</li><li>Eco-Drive</li><li>Satellite Wave</li></ul></div>
+                        <div class="brand-card"><h3>Cartier</h3><ul><li>Santos</li><li>Fine Watchmaking</li><li>Exceptional Prestige</li></ul></div>
+                        <div class="brand-card"><h3>Tudor</h3><ul><li>METAS</li><li>MT Calibres</li><li>Robust Engineering</li></ul></div>
+                        <div class="brand-card"><h3>Seiko</h3><ul><li>Astron GPS Solar</li><li>Integrated Production</li><li>Broad Technical Range</li></ul></div>
+                        <div class="brand-card"><h3>Casio</h3><ul><li>G-Shock</li><li>Tough Solar</li><li>GPS / Multi Band 6</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Blancpain</h3>
-                    <ul>
-                        <li>Fifty Fathoms</li>
-                        <li>Villeret</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Glashütte Original</h3>
-                    <ul>
-                        <li>PanoMatic</li>
-                        <li>Senator</li>
-                        <li>Seventies</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Nomos Glashütte</h3>
-                    <ul>
-                        <li>Tangente</li>
-                        <li>Orion</li>
-                        <li>Metro</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Cartier</h3>
-                    <ul>
-                        <li>Tank</li>
-                        <li>Santos</li>
-                        <li>Ballon Bleu</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>IWC</h3>
-                    <ul>
-                        <li>Portugieser</li>
-                        <li>Big Pilot</li>
-                        <li>Mark XX</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Chopard</h3>
-                    <ul>
-                        <li>L.U.C.</li>
-                        <li>Alpine Eagle</li>
-                        <li>Mille Miglia</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Bulgari</h3>
-                    <ul>
-                        <li>Octo Finissimo</li>
-                        <li>Serpenti</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Longines</h3>
-                    <ul>
-                        <li>Spirit</li>
-                        <li>Legend Diver</li>
-                        <li>Master</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- B TIER -->
-        <section class="tier-section tier-b">
-            <div class="tier-label">B</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Oris</h3>
-                    <ul>
-                        <li>Aquis</li>
-                        <li>Divers Sixty-Five</li>
-                        <li>Big Crown</li>
-                    </ul>
+            <section class="tier-section tier-b">
+                <div class="tier-side">
+                    <div class="tier-mark">B</div>
+                    <div>
+                        <div class="tier-name">Solid</div>
+                        <div class="tier-note">Strong brands with clear strengths, but below the top levels.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>TAG Heuer</h3>
-                    <ul>
-                        <li>Carrera</li>
-                        <li>Monaco</li>
-                        <li>Aquaracer</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Nomos Glashütte</h3><ul><li>Swing System</li><li>DUW 3001</li><li>Neomatik</li></ul></div>
+                        <div class="brand-card"><h3>Sinn</h3><ul><li>Tegiment</li><li>Ar-Dehumidifying</li><li>DIAPAL</li></ul></div>
+                        <div class="brand-card"><h3>Longines</h3><ul><li>Ultra-Chron</li><li>Silicon Balance Spring</li><li>High Prestige</li></ul></div>
+                        <div class="brand-card"><h3>Frederique Constant</h3><ul><li>Manufacture</li><li>Monolithic Oscillator</li><li>Perpetual Calendar</li></ul></div>
+                        <div class="brand-card"><h3>Christopher Ward</h3><ul><li>Bel Canto</li><li>SH21</li><li>Modern Engineering</li></ul></div>
+                        <div class="brand-card"><h3>Oris</h3><ul><li>Calibre 400</li><li>10-year Warranty</li><li>Tool-watch Engineering</li></ul></div>
+                        <div class="brand-card"><h3>Rado</h3><ul><li>High-tech Ceramic</li><li>Plasma Ceramic</li><li>Material Innovation</li></ul></div>
+                        <div class="brand-card"><h3>Tissot</h3><ul><li>Powermatic 80</li><li>Silicium</li><li>T-Touch</li></ul></div>
+                        <div class="brand-card"><h3>Swatch</h3><ul><li>Sistem51</li><li>Automated Production</li><li>Bioceramic</li></ul></div>
+                        <div class="brand-card"><h3>Hamilton</h3><ul><li>H-10</li><li>Khaki Field</li><li>Strong Recognition</li></ul></div>
+                        <div class="brand-card"><h3>Baume &amp; Mercier</h3><ul><li>Baumatic</li><li>Long Power Reserve</li><li>Established Prestige</li></ul></div>
+                        <div class="brand-card"><h3>Fortis</h3><ul><li>WERK 17</li><li>Space Testing</li><li>Tool-watch Focus</li></ul></div>
+                        <div class="brand-card"><h3>Mido</h3><ul><li>Caliber 80</li><li>Silicon</li><li>Strong Specs</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Sinn</h3>
-                    <ul>
-                        <li>U1</li>
-                        <li>U2</li>
-                        <li>104</li>
-                        <li>EZM</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Baume &amp; Mercier</h3>
-                    <ul>
-                        <li>Clifton Baumatic</li>
-                        <li>Riviera</li>
-                        <li>Classima</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Rado</h3>
-                    <ul>
-                        <li>Captain Cook</li>
-                        <li>True Square</li>
-                        <li>HyperChrome</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Junghans</h3>
-                    <ul>
-                        <li>Max Bill</li>
-                        <li>Meister</li>
-                        <li>Form A</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Christopher Ward</h3>
-                    <ul>
-                        <li>C60 Trident</li>
-                        <li>C65</li>
-                        <li>C1 Grand Malvern</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Baltic</h3>
-                    <ul>
-                        <li>Aquascaphe</li>
-                        <li>HMS</li>
-                        <li>MR01</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Farer</h3>
-                    <ul>
-                        <li>Lander</li>
-                        <li>Beagle</li>
-                        <li>AquaMatic</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Hamilton</h3>
-                    <ul>
-                        <li>Khaki Field</li>
-                        <li>Ventura</li>
-                        <li>Jazzmaster</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- C TIER -->
-        <section class="tier-section tier-c">
-            <div class="tier-label">C</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Seiko</h3>
-                    <ul>
-                        <li>Prospex</li>
-                        <li>Presage</li>
-                        <li>Alpinist</li>
-                        <li>SKX</li>
-                    </ul>
+            <section class="tier-section tier-c">
+                <div class="tier-side">
+                    <div class="tier-mark">C</div>
+                    <div>
+                        <div class="tier-name">Mid</div>
+                        <div class="tier-note">Competent watchmaking with more limited technical depth or prestige.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Tissot</h3>
-                    <ul>
-                        <li>PRX</li>
-                        <li>Powermatic 80</li>
-                        <li>Le Locle</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Certina</h3><ul><li>DS Concept</li><li>Powermatic 80</li><li>Tool-watch Focus</li></ul></div>
+                        <div class="brand-card"><h3>Orient</h3><ul><li>In-house Automatic</li><li>Kamasu</li><li>Bambino</li></ul></div>
+                        <div class="brand-card"><h3>Junghans</h3><ul><li>Max Bill</li><li>Radio Control</li><li>German Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Stowa</h3><ul><li>Flieger</li><li>Antea</li><li>German Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Laco</h3><ul><li>Flieger Pro</li><li>Augsburg</li><li>Pilot Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Nivada Grenchen</h3><ul><li>Chronomaster</li><li>F77</li><li>Vintage Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Yema</h3><ul><li>CMM Calibres</li><li>Superman</li><li>French Manufacture</li></ul></div>
+                        <div class="brand-card"><h3>Alpina</h3><ul><li>Alpiner</li><li>Seastrong</li><li>Sports Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Farer</h3><ul><li>Lander</li><li>AquaMatic</li><li>Distinct Design</li></ul></div>
+                        <div class="brand-card"><h3>Baltic</h3><ul><li>Aquascaphe</li><li>MR01</li><li>Microbrand Prestige</li></ul></div>
+                        <div class="brand-card"><h3>Timex</h3><ul><li>Q</li><li>Marlin</li><li>Mass-market Heritage</li></ul></div>
+                        <div class="brand-card"><h3>Steinhart</h3><ul><li>Ocean One</li><li>Flieger</li><li>Strong Specs</li></ul></div>
+                        <div class="brand-card"><h3>Vaer</h3><ul><li>D5</li><li>C5</li><li>Tool-watch Design</li></ul></div>
+                        <div class="brand-card"><h3>Lorier</h3><ul><li>Neptune</li><li>Gemini</li><li>Microbrand Appeal</li></ul></div>
+                        <div class="brand-card"><h3>Dan Henry</h3><ul><li>1964</li><li>1970</li><li>Vintage-inspired</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Mido</h3>
-                    <ul>
-                        <li>Ocean Star</li>
-                        <li>Commander</li>
-                        <li>Baroncelli</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Certina</h3>
-                    <ul>
-                        <li>DS Action</li>
-                        <li>DS PH200M</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Citizen</h3>
-                    <ul>
-                        <li>Promaster</li>
-                        <li>The Citizen</li>
-                        <li>Eco-Drive</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Nivada Grenchen</h3>
-                    <ul>
-                        <li>F77</li>
-                        <li>Chronomaster Aviator</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Fortis</h3>
-                    <ul>
-                        <li>Flieger</li>
-                        <li>Marinemaster</li>
-                        <li>Cosmonaut</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Alpina</h3>
-                    <ul>
-                        <li>Alpiner</li>
-                        <li>Seastrong</li>
-                        <li>Startimer</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Lorier</h3>
-                    <ul>
-                        <li>Neptune</li>
-                        <li>Gemini</li>
-                        <li>Falcon</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Yema</h3>
-                    <ul>
-                        <li>Superman</li>
-                        <li>Speedgraf</li>
-                        <li>Flygraf</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Frederique Constant</h3>
-                    <ul>
-                        <li>Slimline</li>
-                        <li>Highlife</li>
-                        <li>Classics</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- D TIER -->
-        <section class="tier-section tier-d">
-            <div class="tier-label">D</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Casio</h3>
-                    <ul>
-                        <li>G-Shock</li>
-                        <li>Oceanus</li>
-                        <li>Edifice</li>
-                    </ul>
+            <section class="tier-section tier-d">
+                <div class="tier-side">
+                    <div class="tier-mark">D</div>
+                    <div>
+                        <div class="tier-name">Below average</div>
+                        <div class="tier-note">Some relevance, but limited technical substance.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Timex</h3>
-                    <ul>
-                        <li>Q Reissue</li>
-                        <li>Marlin</li>
-                        <li>Expedition</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Shinola</h3><ul><li>Runwell</li><li>Canfield</li><li>Brand-led Positioning</li></ul></div>
+                        <div class="brand-card"><h3>Undone</h3><ul><li>Basecamp</li><li>Urban</li><li>Customization</li></ul></div>
+                        <div class="brand-card"><h3>Invicta</h3><ul><li>Pro Diver</li><li>Specialty</li><li>Inconsistent Positioning</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Orient</h3>
-                    <ul>
-                        <li>Bambino</li>
-                        <li>Kamasu</li>
-                        <li>Ray II</li>
-                        <li>Mako</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Swatch</h3>
-                    <ul>
-                        <li>MoonSwatch</li>
-                        <li>Bioceramic</li>
-                        <li>Sistem51</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Laco</h3>
-                    <ul>
-                        <li>Flieger Type A</li>
-                        <li>Flieger Type B</li>
-                        <li>Augsburg</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Steinhart</h3>
-                    <ul>
-                        <li>Ocean One</li>
-                        <li>Vintage</li>
-                        <li>Flieger</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Stowa</h3>
-                    <ul>
-                        <li>Flieger</li>
-                        <li>Antea</li>
-                        <li>Partitio</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Vaer</h3>
-                    <ul>
-                        <li>D5</li>
-                        <li>C5</li>
-                        <li>S5</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Dan Henry</h3>
-                    <ul>
-                        <li>1964</li>
-                        <li>1970</li>
-                        <li>1963</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Undone</h3>
-                    <ul>
-                        <li>Basecamp</li>
-                        <li>Urban</li>
-                        <li>Aqua</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- E TIER -->
-        <section class="tier-section tier-e">
-            <div class="tier-label">E</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Shinola</h3>
-                    <ul>
-                        <li>Runwell</li>
-                        <li>Lake Erie Monster</li>
-                        <li>Canfield</li>
-                    </ul>
+            <section class="tier-section tier-e">
+                <div class="tier-side">
+                    <div class="tier-mark">E</div>
+                    <div>
+                        <div class="tier-name">Fashion-led</div>
+                        <div class="tier-note">Style-first brands with limited horological depth.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Fossil</h3>
-                    <ul>
-                        <li>Minimalist</li>
-                        <li>Grant</li>
-                        <li>Machine</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Fossil</h3><ul><li>Minimalist</li><li>Grant</li><li>Fashion-first</li></ul></div>
+                        <div class="brand-card"><h3>Skagen</h3><ul><li>Aaren</li><li>Holst</li><li>Design-first</li></ul></div>
+                        <div class="brand-card"><h3>Nixon</h3><ul><li>Time Teller</li><li>Sentry</li><li>Lifestyle-first</li></ul></div>
+                        <div class="brand-card"><h3>Michael Kors</h3><ul><li>Runway</li><li>Lexington</li><li>Fashion Brand</li></ul></div>
+                        <div class="brand-card"><h3>Emporio Armani</h3><ul><li>Classic</li><li>Luigi</li><li>Fashion Brand</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Michael Kors</h3>
-                    <ul>
-                        <li>Runway</li>
-                        <li>Lexington</li>
-                        <li>Parker</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Emporio Armani</h3>
-                    <ul>
-                        <li>Classic</li>
-                        <li>Luigi</li>
-                        <li>Sport</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Skagen</h3>
-                    <ul>
-                        <li>Aaren</li>
-                        <li>Holst</li>
-                        <li>Grenen</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Invicta</h3>
-                    <ul>
-                        <li>Pro Diver</li>
-                        <li>Russian Diver</li>
-                        <li>Specialty</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Nixon</h3>
-                    <ul>
-                        <li>Time Teller</li>
-                        <li>Sentry</li>
-                        <li>51-30</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- F TIER -->
-        <section class="tier-section tier-f">
-            <div class="tier-label">F</div>
-            <div class="tier-content">
-                <div class="brand-card">
-                    <h3>Daniel Wellington</h3>
-                    <ul>
-                        <li>Classic Sheffield</li>
-                        <li>Petite</li>
-                    </ul>
+            <section class="tier-section tier-f">
+                <div class="tier-side">
+                    <div class="tier-mark">F</div>
+                    <div>
+                        <div class="tier-name">Marketing-led</div>
+                        <div class="tier-note">Minimal technical value, mostly branding.</div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>MVMT</h3>
-                    <ul>
-                        <li>Classic</li>
-                        <li>Voyager</li>
-                        <li>Element</li>
-                    </ul>
+                <div class="tier-panel">
+                    <div class="tier-content">
+                        <div class="brand-card"><h3>Daniel Wellington</h3><ul><li>Classic</li><li>Petite</li><li>Marketing-first</li></ul></div>
+                        <div class="brand-card"><h3>MVMT</h3><ul><li>Classic</li><li>Voyager</li><li>Marketing-first</li></ul></div>
+                        <div class="brand-card"><h3>Vincero</h3><ul><li>Chrono S</li><li>Kairos</li><li>Marketing-first</li></ul></div>
+                        <div class="brand-card"><h3>The Fifth</h3><ul><li>Melbourne</li><li>Tokyo</li><li>Marketing-first</li></ul></div>
+                        <div class="brand-card"><h3>Filippo Loreti</h3><ul><li>Venice</li><li>Rome</li><li>Marketing-first</li></ul></div>
+                        <div class="brand-card"><h3>Brathwait</h3><ul><li>Classic Slim</li><li>Automatic</li><li>Marketing-first</li></ul></div>
+                    </div>
                 </div>
-                <div class="brand-card">
-                    <h3>Vincero</h3>
-                    <ul>
-                        <li>Chrono S</li>
-                        <li>Kairos</li>
-                        <li>Outrider</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>The Fifth</h3>
-                    <ul>
-                        <li>Melbourne</li>
-                        <li>Tokyo</li>
-                        <li>New York</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Filippo Loreti</h3>
-                    <ul>
-                        <li>Venice</li>
-                        <li>Rome</li>
-                        <li>Odyssey</li>
-                    </ul>
-                </div>
-                <div class="brand-card">
-                    <h3>Brathwait</h3>
-                    <ul>
-                        <li>The Classic Slim</li>
-                        <li>Automatic</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
     <footer class="footer">
-        <p>
-            Based on consensus within the watch enthusiast community.<br>
-            Not affiliated with any watch brand. Rankings reflect horological merit 
-            rather than market price or brand prestige alone.
-        </p>
+        <div class="container">
+            <p>Method: technology first, prestige second. Resale value and hype are intentionally excluded.</p>
+        </div>
     </footer>
 </body>
 </html>
